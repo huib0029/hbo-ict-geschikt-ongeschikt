@@ -2,19 +2,19 @@
   <v-app>
     <Toolbar/>
     <v-content>
-      <HelloWorld/>
+      <Quiz/>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Quiz from './components/Quiz';
 import Toolbar from './layout/Toolbar'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    Quiz,
     Toolbar
   },
   data: () => ({
