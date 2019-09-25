@@ -24,7 +24,7 @@
       <v-card-title v-else>Quiz zonder webcam</v-card-title>
       <v-card-text>Quiz zonder webcam oftwel de Microsoft Face-api</v-card-text>
       <v-card-actions v-if="actions">
-        <v-btn block outlined>Start de Quiz!</v-btn>
+        <v-btn block color="primary">Start de Quiz!</v-btn>
       </v-card-actions>
     </v-card>
     <v-card
@@ -43,7 +43,7 @@
       <v-card-title v-else>Quiz met webcam AI</v-card-title>
       <v-card-text>Quiz met webcam AI / Microsoft Face-api</v-card-text>
       <v-card-actions align-center v-if="actions">
-        <v-btn block outlined>Start de Quiz!</v-btn>
+        <v-btn block color="primary">Start de Quiz!</v-btn>
       </v-card-actions>
     </v-card>
         </v-row>
