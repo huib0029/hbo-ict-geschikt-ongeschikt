@@ -2,23 +2,24 @@
   <v-app>
     <Toolbar/>
     <v-content>
-      <Quiz/>
+      <app-router></app-router>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import Quiz from './components/Quiz';
-import Toolbar from './layout/Toolbar'
+import Toolbar from './layout/Toolbar';
+import AppRouter from './plugins/router';
 
 export default {
   name: 'App',
   components: {
-    Quiz,
-    Toolbar
+    Toolbar,
+    AppRouter
   },
   data: () => ({
     //
-  }),
+  })
 };
+
 </script>
