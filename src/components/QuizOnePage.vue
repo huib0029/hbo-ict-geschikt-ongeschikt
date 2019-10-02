@@ -1,81 +1,41 @@
 <template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap
-    >
-      <v-flex xs12>
-      
-      </v-flex>
-
-      <v-flex mb-4>
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a href="https://community.vuetifyjs.com" target="_blank">Discord Community</a>
-        </p>
-      </v-flex>
-
-      <v-flex
-        mb-5
-        xs12
+  <v-container
+      class="fill-height"
+      fluid
       >
-        <h2 class="headline font-weight-bold mb-3">What's next?</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-
-      <v-flex
-        xs12
-        mb-5
+      <v-row
+              align="center"
+              justify="center"
       >
-        <h2 class="headline font-weight-bold mb-3">Important Links</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
+          <v-col
+                  cols="12"
+                  sm="8"
+                  md="4"
           >
-            {{ link.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Ecosystem</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-    </v-layout>
+              <v-card class="elevation-12">
+                  <v-toolbar
+                          color="primary"
+                          dark
+                          flat
+                  >
+                      <v-toolbar-title>Vraag 1</v-toolbar-title>
+                  </v-toolbar>
+                  <v-card-text>
+                      <v-form>
+                          <v-text-field
+                                  label="Wat is je pincode?"
+                                  name="login"
+                                  type="text"
+                          ></v-text-field>
+                      </v-form>
+                  </v-card-text>
+                  <v-card-actions>
+                      <div class="flex-grow-1"></div>
+                      <v-btn color="primary">Door naar vraag {{ nextQuestion }}</v-btn>
+                  </v-card-actions>
+              </v-card>
+          </v-col>
+      </v-row>
   </v-container>
 </template>
 
