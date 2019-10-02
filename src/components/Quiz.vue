@@ -3,8 +3,6 @@
     <v-row>
       <v-col cols="12">
         <v-row
-          :align="alignment"
-          :justify="justify"
           class="grey lighten-5"
           style="height: 300px;"
         >
@@ -24,7 +22,7 @@
       <v-card-title v-else>Quiz zonder webcam</v-card-title>
       <v-card-text>Quiz zonder webcam oftwel de Microsoft Face-api</v-card-text>
       <v-card-actions v-if="actions">
-        <v-btn block color="primary">Start de Quiz!</v-btn>
+        <v-btn @click="goTo('/quiz-one')" block color="primary">Start de Quiz!</v-btn>
       </v-card-actions>
     </v-card>
     <v-card
@@ -43,7 +41,7 @@
       <v-card-title v-else>Quiz met webcam AI</v-card-title>
       <v-card-text>Quiz met webcam AI / Microsoft Face-api</v-card-text>
       <v-card-actions align-center v-if="actions">
-        <v-btn block color="primary">Start de Quiz!</v-btn>
+        <v-btn @click="goTo('/quiz-two')" block color="primary">Start de Quiz!</v-btn>
       </v-card-actions>
     </v-card>
         </v-row>
@@ -54,12 +52,19 @@
 </template>
 
 <script>
+import { push } from "@/plugins/history";
+
 export default {
   data: () => ({
     media: true,
     actions: true,
     elevation: 24,
     width: 500
-  })
+  }),
+  methods: {
+    goTo(route) {
+      push(route);
+    }
+  }
 };
 </script>
