@@ -57,13 +57,13 @@
 
                                         <!-- back button -->
                                         <a class="button" v-on:click="prev();" :disabled="questionIndex < 1">
-                                            Back
+                                            Terug
                                         </a>
 
                                         <!-- next button -->
                                         <a class="button" :class="(userResponses[questionIndex]==null)?'':'is-active'" v-on:click="next();"
                                            :disabled="questionIndex>=quiz.questions.length">
-                                            {{ (userResponses[questionIndex]==null)?'Skip':'Next' }}
+                                            {{ (userResponses[questionIndex]==null)?'Echt geen idee!':'Volgende' }}
                                         </a>
 
                                     </nav>
@@ -85,7 +85,7 @@
 
                                 <!--resultTitleBlock-->
                                 <h2 class="title">
-                                    You did {{ (score()>7?'an amazing':(score()<4?'a poor':'a good')) }} job!
+                                    Je hebt het  {{ (score()>7?'fantastisch':(score()<4?'matig':'best goed')) }} gedaan! Blijf oefenen om je vaardigheden te verbeteren!
                                 </h2>
                                 <p class="subtitle">
                                     Total score: {{ score() }} / {{ quiz.questions.length }}
@@ -123,6 +123,27 @@
             { text: 'None of the above' }
           ]
         },
+        {
+          text: 'Welk lectoraat is verbonden aan de opleiding HBO-ICT?',
+          responses: [
+            { text: 'Ontwikkelingshulp' },
+            { text: 'Data Science', correct: true },
+            { text: 'Business Intelligence & Analytics' },
+            { text: 'Centure of bugs' },
+            { text: 'Kenniscentrum kusttoerisme' }
+          ]
+        },
+        {
+          text: 'Welk besturingssysteem is verplicht voor deze opleiding?',
+          responses: [
+            { text: 'Linux' },
+            { text: 'Mac OS', },
+            { text: 'Windows' },
+            { text: 'Chrome OS' },
+            { text: 'De terminal' },
+            { text: 'Geen van allen', correct: true  },
+          ]
+        },
       ]
     },
     userResponseSkelaton = Array(quiz.questions.length).fill(null);
@@ -147,7 +168,7 @@
         this.userResponses = Array(this.quiz.questions.length).fill(null);
       },
       selectOption: function (index) {
-        Vue.set(this.userResponses, this.questionIndex, index);
+        this.$set(this.userResponses, this.questionIndex, index);
         //console.log(this.userResponses);
       },
       next: function () {
@@ -188,23 +209,6 @@
     @import url("https://fonts.googleapis.com/css?family=Montserrat:400,400i,700");
     @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
 
-    body {
-        font-family: "Open Sans", sans-serif;
-        font-size: 14px;
-
-        height: 100vh;
-
-        background: #CFD8DC;
-
-        /* mocking native UI */
-        cursor: default !important; /* remove text selection cursor */
-        user-select: none; /* remove text selection */
-        user-drag: none; /* disbale element dragging */
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
 
     .button {
         transition: $trans_duration;
