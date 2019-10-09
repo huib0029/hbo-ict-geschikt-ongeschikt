@@ -84,14 +84,26 @@
 
                                 <!--resultTitleBlock-->
                                 <h2 class="title">
-                                    Je hebt het {{ (score()>7?'fantastisch':(score()< 4 ?'matig':'best goed')) }} gedaan! Blijf oefenen om je
-                                    vaardigheden te verbeteren!
+                                  <span v-if="score()>7">
+                                    Je hebt het fantastisch gedaan!
+                                    {{info}}
+                                  </span>
+                                  <span v-if="score()>5.5">
+                                    Je hebt het goed gedaan! 
+                                    {{info}}
+                                  </span>
+                                  <span v-if="score()<5.5">
+                                    Je hebt het matig gedaan! <br>
+                                    Probeer de test opnieuw te maken, ik weet zeker dat je het kan!
+                                    {{info}}
+                                  </span>
                                 </h2>
+                                
                                 <p class="subtitle">
                                     Je hebt behaald: {{ score() }}
                                 </p>
                                 <br>
-                                <a class="button" @click="restart()">Nog een keer! <i class="fa fa-refresh"></i></a>
+                                <a class="button" @click="gif()">Nog een keer! <i class="fa fa-refresh"></i></a>
                                 <!--/resultTitleBlock-->
 
                             </div>
@@ -111,7 +123,9 @@
 </template>
 
 <script>
-  var quiz = {
+import API from '../plugins/gif_api'
+
+var quiz = {
       user: 'ICT\'er',
       questions: [
         {
@@ -273,8 +287,14 @@
         return grade.toFixed(1);
 
         // return this.userResponses.filter(function(val) { return val }).length;
-      }
-    }
+      },
+
+     gif: function () { 
+       API
+      .get('random?api_key=KQPBZKwPcJLRpW0L4u3quJGsxfMUDsIy')
+      .then(response => (this.info = response))
+    },
+  }
   };
 
 </script>
