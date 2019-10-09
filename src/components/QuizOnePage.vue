@@ -33,11 +33,10 @@
                                         <progress class="progress is-info is-small" :value="(questionIndex/quiz.questions.length)*100" max="100">
                                             {{(questionIndex/quiz.questions.length)*100}}%
                                         </progress>
-                                        <p>{{(questionIndex/quiz.questions.length)*100}}% complete</p>
+                                        <p>{{((questionIndex/quiz.questions.length)*100).toFixed(0)}}% complete</p>
                                     </div>
                                     <!--/progress-->
                                 </header>
-
                                 <!-- questionTitle -->
                                 <h2 class="titleContainer title">{{ quiz.questions[questionIndex].text }}</h2>
 
@@ -80,18 +79,19 @@
 
                                 <!-- quizCompletedIcon: Achievement Icon -->
                                 <span class="icon">
-                <i class="fa" :class="score()>3?'fa-check-circle-o is-active':'fa-times-circle'"></i>
-              </span>
+                                    <i class="fa" :class="score()>3?'fa-check-circle-o is-active':'fa-times-circle'"></i>
+                                </span>
 
                                 <!--resultTitleBlock-->
                                 <h2 class="title">
-                                    Je hebt het  {{ (score()>7?'fantastisch':(score()<4?'matig':'best goed')) }} gedaan! Blijf oefenen om je vaardigheden te verbeteren!
+                                    Je hebt het {{ (score()>7?'fantastisch':(score()< 4 ?'matig':'best goed')) }} gedaan! Blijf oefenen om je
+                                    vaardigheden te verbeteren!
                                 </h2>
                                 <p class="subtitle">
-                                    Total score: {{ score() }} / {{ quiz.questions.length }}
+                                    Je hebt behaald: {{ score() }}
                                 </p>
                                 <br>
-                                <a class="button" @click="restart()">restart <i class="fa fa-refresh"></i></a>
+                                <a class="button" @click="restart()">Nog een keer! <i class="fa fa-refresh"></i></a>
                                 <!--/resultTitleBlock-->
 
                             </div>
@@ -115,12 +115,42 @@
       user: 'ICT\'er',
       questions: [
         {
-          text: 'Wat is HTML?',
+          text: 'Wat is HTTP?',
           responses: [
             { text: 'Hyper text transfer package' },
             { text: 'Hyper text transfer protocol', correct: true },
             { text: 'Hyphenation text test program' },
-            { text: 'None of the above' }
+            { text: 'Geen van bovenstaande' }
+          ]
+        },
+        // {
+        //   text: 'Waar staat CMS voor?',
+        //   responses: [
+        //     { text: 'Content Markup System' },
+        //     { text: 'Content onderhoud Systeem' },
+        //     { text: 'Content My Self' },
+        //     { text: 'Content Management System', correct: true },
+        //     { text: 'Geen van bovenstaande' }
+        //   ]
+        // },
+        {
+          text: 'De uitkomst van een datascience project is vaak afhankelijk van:',
+          responses: [
+            { text: 'De scope van het project' },
+            { text: 'De kwaliteit van de data' , correct: true },
+            { text: 'De gebruikte programmeertaal' },
+            { text: 'De datascientist' },
+            { text: 'Geen van bovenstaande' }
+          ]
+        },
+        {
+          text: 'Wat doe je als datascientist wanneer je data mist:',
+          responses: [
+            { text: 'Even wat bijkopen' },
+            { text: 'Achter degene aan die de database heeft beheerd' },
+            { text: 'Gemiddeldes berekenen en toepassen voor de missende velden' },
+            { text: 'Bepalen wat de impact hiervan is en kijken of deze uitgesloten kan worden van verder onderzoek' , correct: true },
+            { text: 'Geen van bovenstaande' }
           ]
         },
         {
@@ -134,6 +164,16 @@
           ]
         },
         {
+          text: 'Welke van de volgende query\'s is goed?',
+          responses: [
+            { text: 'SELECT name from users', correct: true },
+            { text: 'GET koffie FROM koffieapparaat' },
+            { text: 'UPDATE studenten INSERT studiepunten=60 WHERE id=-1' },
+            { text: 'Wordpress' },
+            { text: 'Geen van bovenstaande' }
+          ]
+        },
+        {
           text: 'Welk besturingssysteem is verplicht voor deze opleiding?',
           responses: [
             { text: 'Linux' },
@@ -141,7 +181,44 @@
             { text: 'Windows' },
             { text: 'Chrome OS' },
             { text: 'De terminal' },
-            { text: 'Geen van allen', correct: true  },
+            { text: 'Geen van allen', correct: true },
+          ]
+        },
+        {
+          text: 'Welke is geen webserver?',
+          responses: [
+            { text: 'Apache' },
+            { text: 'NGINX', },
+            { text: 'IIS' },
+            { text: 'Kodi', correct: true },
+            { text: 'Geen van allen' },
+          ]
+        },
+        {
+          text: 'Waar staat de comptentie BAN voor?',
+          responses: [
+            { text: 'Iemand bannen of wordt geband' },
+            { text: 'Bedrijfsprocessen analyseren', },
+            { text: 'Bedrijsprocessen achtereenvolgens noteren' , correct: true  },
+            { text: 'Geen van allen' },
+          ]
+        },
+        {
+          text: 'Welk proces komt niet voor in een pakketselectie van software?',
+          responses: [
+            { text: 'Opstellen van Long List' },
+            { text: 'Opstellen van Knock-Out criteria' },
+            { text: 'Opstellen van requirements' },
+            { text: 'ASMR toepassen (Autonomous Sensory Meridian Respons)', correct: true  },
+          ]
+        },
+        {
+          text: 'Wat doet een Data Scientist?',
+          responses: [
+            { text: 'Data Science', correct: true  },
+            { text: 'Analytische filosofie' },
+            { text: 'Software analyseren en ontwerpen' },
+            { text: 'Proactief data verzamelen' },
           ]
         },
       ]
@@ -154,6 +231,7 @@
       quiz: quiz,
       questionIndex: 0,
       userResponses: userResponseSkelaton,
+      totalQuestions: quiz.questions.length,
       isActive: false
     }),
 
@@ -162,6 +240,7 @@
         return String.fromCharCode(97 + i);
       }
     },
+
     methods: {
       restart: function () {
         this.questionIndex = 0;
@@ -184,16 +263,14 @@
       score: function () {
         var score = 0;
         for (let i = 0; i < this.userResponses.length; i++) {
-          if (
-            typeof this.quiz.questions[i].responses[
-              this.userResponses[i]
-              ] !== 'undefined' &&
-            this.quiz.questions[i].responses[this.userResponses[i]].correct
-          ) {
+          if ( typeof this.quiz.questions[i].responses[this.userResponses[i]] !== 'undefined'
+            && this.quiz.questions[i].responses[this.userResponses[i]].correct) {
             score = score + 1;
           }
         }
-        return score;
+
+        var grade = score/this.totalQuestions*10;
+        return grade.toFixed(1);
 
         // return this.userResponses.filter(function(val) { return val }).length;
       }
