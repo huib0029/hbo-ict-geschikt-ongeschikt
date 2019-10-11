@@ -79,7 +79,7 @@
 
                                 <!-- quizCompletedIcon: Achievement Icon -->
                                 <span class="icon">
-                                    <i class="fa" :class="score()>3?'fa-check-circle-o is-active':'fa-times-circle'"></i>
+                                    <i class="fa" :class="score()>6?'fa-check-circle-o is-active':'fa-times-circle'"></i>
                                 </span>
 
                                 <!--resultTitleBlock-->
@@ -255,11 +255,61 @@
           this.questionIndex++;
       },
 
+      confetti: function () {
+        for (var i = 0; i < 150; i++) {
+          create(i);
+        }
+
+        function create(i) {
+          var width = Math.random() * 8;
+          var height = width * 0.4;
+          var colourIdx = Math.ceil(Math.random() * 3);
+          var colour = "red";
+          switch(colourIdx) {
+            case 1:
+              colour = "yellow";
+              break;
+            case 2:
+              colour = "blue";
+              break;
+            default:
+              colour = "red";
+          }
+          $('<div class="confetti-'+i+' '+colour+'"></div>').css({
+            "width" : width+"px",
+            "height" : height+"px",
+            "top" : -Math.random()*20+"%",
+            "left" : Math.random()*100+"%",
+            "opacity" : Math.random()+0.5,
+            "transform" : "rotate("+Math.random()*360+"deg)"
+          }).appendTo('.v-application--wrap');
+
+          drop(i);
+        }
+
+        function drop(x) {
+          $('.confetti-'+x).animate({
+            top: "100%",
+            left: "+="+Math.random()*15+"%"
+          }, Math.random()*3000 + 3000, function() {
+            reset(x);
+          });
+        }
+
+        function reset(x) {
+          $('.confetti-'+x).animate({
+            "top" : -Math.random()*20+"%",
+            "left" : "-="+Math.random()*15+"%"
+          }, 0, function() {
+            drop(x);
+          });
+        }
+      },
+
       prev: function () {
         if (this.quiz.questions.length > 0) this.questionIndex--;
       },
 
-      // Return "true" count in userResponses
       score: function () {
         var score = 0;
         for (let i = 0; i < this.userResponses.length; i++) {
@@ -270,70 +320,16 @@
         }
 
         var grade = score / this.totalQuestions * 10;
-        return grade.toFixed(1);
 
-        // return this.userResponses.filter(function(val) { return val }).length;
+        if (this.questionIndex == this.totalQuestions && grade > 6){
+          this.confetti();
+        }
+
+        return grade.toFixed(1);
       }
     }
   };
-
-  $('document').ready(function () {
-
-    console.log(quiz.questions.length);
-    console.log(this.questionIndex);
-
-    for (var i = 0; i < 500; i++) {
-      create(i);
-    }
-
-    function create(i) {
-      var width = Math.random() * 8;
-      var height = width * 0.4;
-      var colourIdx = Math.ceil(Math.random() * 3);
-      var colour = "red";
-      switch(colourIdx) {
-        case 1:
-          colour = "yellow";
-          break;
-        case 2:
-          colour = "blue";
-          break;
-        default:
-          colour = "red";
-      }
-      $('<div class="confetti-'+i+' '+colour+'"></div>').css({
-        "width" : width+"px",
-        "height" : height+"px",
-        "top" : -Math.random()*20+"%",
-        "left" : Math.random()*100+"%",
-        "opacity" : Math.random()+0.5,
-        "transform" : "rotate("+Math.random()*360+"deg)"
-      }).appendTo('.v-application--wrap');
-
-      drop(i);
-    }
-
-    function drop(x) {
-      $('.confetti-'+x).animate({
-        top: "100%",
-        left: "+="+Math.random()*15+"%"
-      }, Math.random()*3000 + 3000, function() {
-        reset(x);
-      });
-    }
-
-    function reset(x) {
-      $('.confetti-'+x).animate({
-        "top" : -Math.random()*20+"%",
-        "left" : "-="+Math.random()*15+"%"
-      }, 0, function() {
-        drop(x);
-      });
-    }
-  });
 </script>
-
-
 
 <style lang="scss">
     $trans_duration: 0.3s;
