@@ -79,12 +79,12 @@
 
                                 <!-- quizCompletedIcon: Achievement Icon -->
                                 <span class="icon">
-                                    <i class="fa" :class="score()>3?'fa-check-circle-o is-active':'fa-times-circle'"></i>
+                                    <i class="fa" :class="score()>6?'fa-check-circle-o is-active':'fa-times-circle'"></i>
                                 </span>
 
                                 <!--resultTitleBlock-->
                                 <h2 class="title">
-                                    Je hebt het {{ (score()>7?'fantastisch':(score()< 4 ?'matig':'best goed')) }} gedaan! Blijf oefenen om je
+                                    Je hebt het {{ (score()>7?'fantastisch':(score()<4?'matig':'best goed')) }} gedaan! Blijf oefenen om je
                                     vaardigheden te verbeteren!
                                 </h2>
                                 <p class="subtitle">
@@ -123,21 +123,21 @@
             { text: 'Geen van bovenstaande' }
           ]
         },
-        // {
-        //   text: 'Waar staat CMS voor?',
-        //   responses: [
-        //     { text: 'Content Markup System' },
-        //     { text: 'Content onderhoud Systeem' },
-        //     { text: 'Content My Self' },
-        //     { text: 'Content Management System', correct: true },
-        //     { text: 'Geen van bovenstaande' }
-        //   ]
-        // },
+        {
+          text: 'Waar staat CMS voor?',
+          responses: [
+            { text: 'Content Markup System' },
+            { text: 'Content onderhoud Systeem' },
+            { text: 'Content My Self' },
+            { text: 'Content Management System', correct: true },
+            { text: 'Geen van bovenstaande' }
+          ]
+        },
         {
           text: 'De uitkomst van een datascience project is vaak afhankelijk van:',
           responses: [
             { text: 'De scope van het project' },
-            { text: 'De kwaliteit van de data' , correct: true },
+            { text: 'De kwaliteit van de data', correct: true },
             { text: 'De gebruikte programmeertaal' },
             { text: 'De datascientist' },
             { text: 'Geen van bovenstaande' }
@@ -149,7 +149,7 @@
             { text: 'Even wat bijkopen' },
             { text: 'Achter degene aan die de database heeft beheerd' },
             { text: 'Gemiddeldes berekenen en toepassen voor de missende velden' },
-            { text: 'Bepalen wat de impact hiervan is en kijken of deze uitgesloten kan worden van verder onderzoek' , correct: true },
+            { text: 'Bepalen wat de impact hiervan is en kijken of deze uitgesloten kan worden van verder onderzoek', correct: true },
             { text: 'Geen van bovenstaande' }
           ]
         },
@@ -199,7 +199,7 @@
           responses: [
             { text: 'Iemand bannen of wordt geband' },
             { text: 'Bedrijfsprocessen analyseren', },
-            { text: 'Bedrijsprocessen achtereenvolgens noteren' , correct: true  },
+            { text: 'Bedrijsprocessen achtereenvolgens noteren', correct: true },
             { text: 'Geen van allen' },
           ]
         },
@@ -209,13 +209,13 @@
             { text: 'Opstellen van Long List' },
             { text: 'Opstellen van Knock-Out criteria' },
             { text: 'Opstellen van requirements' },
-            { text: 'ASMR toepassen (Autonomous Sensory Meridian Respons)', correct: true  },
+            { text: 'ASMR toepassen (Autonomous Sensory Meridian Respons)', correct: true },
           ]
         },
         {
           text: 'Wat doet een Data Scientist?',
           responses: [
-            { text: 'Data Science', correct: true  },
+            { text: 'Data Science', correct: true },
             { text: 'Analytische filosofie' },
             { text: 'Software analyseren en ontwerpen' },
             { text: 'Proactief data verzamelen' },
@@ -255,28 +255,80 @@
           this.questionIndex++;
       },
 
+      confetti: function () {
+        for (var i = 0; i < 150; i++) {
+          create(i);
+        }
+
+        function create(i) {
+          var width = Math.random() * 8;
+          var height = width * 0.4;
+          var colourIdx = Math.ceil(Math.random() * 3);
+          var colour = "red";
+          switch(colourIdx) {
+            case 1:
+              colour = "yellow";
+              break;
+            case 2:
+              colour = "blue";
+              break;
+            default:
+              colour = "red";
+          }
+          $('<div class="confetti-'+i+' '+colour+'"></div>').css({
+            "width" : width+"px",
+            "height" : height+"px",
+            "top" : -Math.random()*20+"%",
+            "left" : Math.random()*100+"%",
+            "opacity" : Math.random()+0.5,
+            "transform" : "rotate("+Math.random()*360+"deg)"
+          }).appendTo('.v-application--wrap');
+
+          drop(i);
+        }
+
+        function drop(x) {
+          $('.confetti-'+x).animate({
+            top: "100%",
+            left: "+="+Math.random()*15+"%"
+          }, Math.random()*3000 + 3000, function() {
+            reset(x);
+          });
+        }
+
+        function reset(x) {
+          $('.confetti-'+x).animate({
+            "top" : -Math.random()*20+"%",
+            "left" : "-="+Math.random()*15+"%"
+          }, 0, function() {
+            drop(x);
+          });
+        }
+      },
+
       prev: function () {
         if (this.quiz.questions.length > 0) this.questionIndex--;
       },
 
-      // Return "true" count in userResponses
       score: function () {
         var score = 0;
         for (let i = 0; i < this.userResponses.length; i++) {
-          if ( typeof this.quiz.questions[i].responses[this.userResponses[i]] !== 'undefined'
+          if (typeof this.quiz.questions[i].responses[this.userResponses[i]] !== 'undefined'
             && this.quiz.questions[i].responses[this.userResponses[i]].correct) {
             score = score + 1;
           }
         }
 
-        var grade = score/this.totalQuestions*10;
-        return grade.toFixed(1);
+        var grade = score / this.totalQuestions * 10;
 
-        // return this.userResponses.filter(function(val) { return val }).length;
+        if (this.questionIndex == this.totalQuestions && grade > 6){
+          this.confetti();
+        }
+
+        return grade.toFixed(1);
       }
     }
   };
-
 </script>
 
 <style lang="scss">
@@ -496,6 +548,27 @@
             height: auto !important;
             border-radius: 6px 6px 0px 0px;
         }
+    }
+
+    .wrapper {
+        position: relative;
+        min-height: 100vh;
+    }
+
+    [class|="confetti"] {
+        position: absolute;
+    }
+
+    .red {
+        background-color: #E94A3F;
+    }
+
+    .yellow {
+        background-color: #FAA040;
+    }
+
+    .blue {
+        background-color: #5FC9F5;
     }
 
 </style>
