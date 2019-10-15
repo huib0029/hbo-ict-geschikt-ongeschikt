@@ -1,7 +1,7 @@
 import { listen } from "./history";
 import Quiz from '@/components/Quiz';
 import QuizOnePage from '@/components/QuizOnePage';
-import QuizTwoPage from '@/components/QuizOnePage';
+import QuizTwoPage from '@/components/QuizTwoPage';
 
 const routes = {
     "/": Quiz,
