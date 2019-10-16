@@ -543,4 +543,5 @@ $primary_color: #3d5afe;
     border-radius: 6px 6px 0px 0px;
   }
 }
+
 </style>
