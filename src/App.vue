@@ -16,10 +16,7 @@ export default {
   components: {
     Toolbar,
     AppRouter
-  },
-  data: () => ({
-    //
-  })
+  }
 };
 
 </script>
