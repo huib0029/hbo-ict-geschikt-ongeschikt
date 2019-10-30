@@ -5,7 +5,7 @@
         <!--container-->
         <section class="container">
           <!--questionBox-->
-          <div class="questionBox" id="app">
+          <div v-if="playerName" class="questionBox" id="app">
             <!-- transition -->
             <transition
               :duration="{ enter: 500, leave: 300 }"
@@ -20,7 +20,11 @@
                 v-bind:key="questionIndex"
               >
                 <header>
-                  <h1 class="title is-6">HBO-ICT quiz</h1>
+                  <h1 class="title is-6">
+                    HBO-ICT quiz
+                    <br />
+                    Naam: {{ playerName }}
+                  </h1>
                   <!--progress-->
                   <div class="progressContainer">
                     <progress
@@ -28,7 +32,7 @@
                       :value="(questionIndex/quiz.questions.length)*100"
                       max="100"
                     >{{(questionIndex/quiz.questions.length)*100}}%</progress>
-                    <p>{{((questionIndex/quiz.questions.length)*100).toFixed(0)}}% complete</p>
+                    <p>{{((questionIndex/quiz.questions.length)*100).toFixed(0)}}% compleet</p>
                   </div>
                   <!--/progress-->
                 </header>
@@ -51,13 +55,16 @@
                   <!--pagination-->
                   <nav class="pagination" role="navigation" aria-label="pagination">
                     <!-- back button -->
-                    <a class="button" v-on:click="prev();" :disabled="questionIndex < 1">Terug</a>
+                    <a
+                      :class="(questionIndex > 0)?'button':'button disabled'"
+                      @click="prev();"
+                    >Terug</a>
 
                     <!-- next button -->
                     <a
                       class="button"
                       :class="(userResponses[questionIndex]==null)?'':'is-active'"
-                      v-on:click="next();"
+                      @click="next();"
                       :disabled="questionIndex>=quiz.questions.length"
                     >{{ (userResponses[questionIndex]==null)?'Echt geen idee!':'Volgende' }}</a>
                   </nav>
@@ -94,7 +101,11 @@
                   </span>
                 </h2>
 
-                <p class="subtitle">Je hebt behaald: {{ score() }}</p>
+                <p class="subtitle">
+                  Je hebt behaald: {{ score() }}
+                  <br />
+                  in {{ seconds }} seconden
+                </p>
                 <br />
                 <a class="button" @click="restart()">
                   Nog een keer!
@@ -106,6 +117,7 @@
             </transition>
           </div>
           <!--/questionBox-->
+          <div v-else>Herlaad het programma of druk op de startpagina en begin opnieuw!</div>
         </section>
         <!--/container-->
       </v-col>
@@ -125,8 +137,16 @@ export default {
     userResponses: userResponseSkelaton,
     totalQuestions: quiz.questions.length,
     isActive: false,
-    gifSrc: ""
+    gifSrc: "",
+    startTime: 0,
+    endTime: 0,
+    seconds: 0,
+    playerName: ""
   }),
+
+  mounted() {
+    this.restart();
+  },
 
   filters: {
     charIndex: function(i) {
@@ -135,25 +155,51 @@ export default {
   },
 
   methods: {
+    askForPlayerName: function() {
+      this.playerName = prompt("Voer een naam in: (alleen letters)");
+      if (this.playerName === "" || name === null ) {
+        alert("Er is geen naam opgegeven, probeer opnieuw");
+        this.askForPlayerName();
+      }
+      if (!/^[a-zA-Z]+$/.test(this.playerName)) {
+        alert("*Alleen letters invoeren");
+        this.askForPlayerName();
+      }
+    },
     restart: function() {
       this.questionIndex = 0;
+      this.startTime = 0;
+      this.endTime = 0;
+      this.seconds = 0;
+      this.playerName = "";
       this.userResponses = Array(this.quiz.questions.length).fill(null);
+      this.askForPlayerName();
     },
     selectOption: function(index) {
       this.$set(this.userResponses, this.questionIndex, index);
-      //console.log(this.userResponses);
     },
     next: function() {
+      if (this.questionIndex === 0) {
+        this.startTime = new Date().getTime();
+      }
       if (this.questionIndex < this.quiz.questions.length) {
         this.questionIndex++;
       }
       if (this.questionIndex === this.quiz.questions.length) {
+        this.endTime = new Date().getTime();
+        this.seconds = (this.endTime - this.startTime) / 1000;
         this.generateGif(this.score());
+        this.saveDataToLocalStorage(this.score());
       }
     },
 
     prev: function() {
-      if (this.quiz.questions.length > 0) this.questionIndex--;
+      if (this.questionIndex > 0) {
+        this.questionIndex--;
+      }
+      if (this.questionIndex < 1) {
+        return;
+      }
     },
 
     // Return "true" count in userResponses
@@ -197,6 +243,47 @@ export default {
         let id = response.data.data.id;
         this.gifSrc = "https://i.giphy.com/" + id + ".gif";
       });
+    },
+
+    saveDataToLocalStorage(score) {
+      let a = [];
+      let correctAnswers = 0;
+      let wrongAnswers = 0;
+      // Parse the serialized data back into an aray of objects
+      a = JSON.parse(localStorage.getItem("leaderboard"));
+      // Push the new data (whether it be an object or anything else) onto the array
+      for (let i = 0; i < this.userResponses.length; i++) {
+        if (
+          typeof this.quiz.questions[i].responses[this.userResponses[i]] !==
+            "undefined" &&
+          this.quiz.questions[i].responses[this.userResponses[i]].correct
+        ) {
+          correctAnswers = correctAnswers + 1;
+        }
+      }
+
+      for (let i = 0; i < this.userResponses.length; i++) {
+        if (
+          typeof this.quiz.questions[i].responses[this.userResponses[i]] !==
+            "undefined" &&
+          !this.quiz.questions[i].responses[this.userResponses[i]].correct
+        ) {
+          wrongAnswers = wrongAnswers + 1;
+        }
+      }
+
+      let userdata = {
+        playerName: this.playerName,
+        score: score,
+        correctAnswers: correctAnswers,
+        wrongAnswers: wrongAnswers,
+        seconds: this.seconds
+      };
+
+      a.push(userdata);
+
+      // Re-serialize the array back into a string and store it in localStorage
+      localStorage.setItem("leaderboard", JSON.stringify(a));
     }
   }
 };

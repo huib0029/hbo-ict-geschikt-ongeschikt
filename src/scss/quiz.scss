@@ -193,6 +193,11 @@ $primary_color: #3d5afe;
   }
 }
 
+.disabled {
+  cursor: not-allowed !important;
+  color: gray !important;
+}
+
 .gif {
   max-width: 28rem;
 }

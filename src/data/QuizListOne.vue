@@ -14,13 +14,13 @@ export const quiz = {
       ]
     },
     {
-      text: 'Waar staat CMS voor?',
+      text: "Waar staat CMS voor?",
       responses: [
-        { text: 'Content Markup System' },
-        { text: 'Content onderhoud Systeem' },
-        { text: 'Content My Self' },
-        { text: 'Content Management System', correct: true },
-        { text: 'Geen van bovenstaande' }
+        { text: "Content Markup System" },
+        { text: "Content onderhoud Systeem" },
+        { text: "Content My Self" },
+        { text: "Content Management System", correct: true },
+        { text: "Geen van bovenstaande" }
       ]
     },
     {
