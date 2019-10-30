@@ -256,7 +256,7 @@
       },
 
       confetti: function () {
-        for (var i = 0; i < 150; i++) {
+        for (var i = 0; i < 50; i++) {
           create(i);
         }
 
