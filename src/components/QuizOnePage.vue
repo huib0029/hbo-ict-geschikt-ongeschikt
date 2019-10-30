@@ -74,7 +74,7 @@
                 class="quizCompleted has-text-centered"
               >
                 <img :src="gifSrc" class="gif" />
-                <br>
+                <br />
 
                 <!-- quizCompletedIcon: Achievement Icon -->
                 <span class="icon">
@@ -115,7 +115,7 @@
 
 <script>
 import RANDOMGIFAPI from "../api/random_gif_api";
-import { quiz, userResponseSkelaton } from '../data/QuizListOne';
+import { quiz, userResponseSkelaton } from "../data/QuizListOne";
 
 export default {
   data: () => ({
@@ -203,5 +203,5 @@ export default {
 </script>
 
 <style lang="scss">
- @import "../scss/quiz.scss";
+@import "../scss/quiz.scss";
 </style>
