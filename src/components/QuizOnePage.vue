@@ -156,9 +156,13 @@ export default {
 
   methods: {
     askForPlayerName: function() {
-      this.playerName = prompt("Voer een naam in:");
-      if (this.playerName === "") {
+      this.playerName = prompt("Voer een naam in: (alleen letters)");
+      if (this.playerName === "" || name === null ) {
         alert("Er is geen naam opgegeven, probeer opnieuw");
+        this.askForPlayerName();
+      }
+      if (!/^[a-zA-Z]+$/.test(this.playerName)) {
+        alert("*Alleen letters invoeren");
         this.askForPlayerName();
       }
     },
