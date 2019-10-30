@@ -51,13 +51,13 @@
                   <!--pagination-->
                   <nav class="pagination" role="navigation" aria-label="pagination">
                     <!-- back button -->
-                    <a class="button" v-on:click="prev();" :disabled="questionIndex < 1">Terug</a>
+                    <a :class="(questionIndex > 0)?'button':'button disabled'" @click="prev();">Terug</a>
 
                     <!-- next button -->
                     <a
                       class="button"
                       :class="(userResponses[questionIndex]==null)?'':'is-active'"
-                      v-on:click="next();"
+                      @click="next();"
                       :disabled="questionIndex>=quiz.questions.length"
                     >{{ (userResponses[questionIndex]==null)?'Echt geen idee!':'Volgende' }}</a>
                   </nav>
@@ -153,7 +153,12 @@ export default {
     },
 
     prev: function() {
-      if (this.quiz.questions.length > 0) this.questionIndex--;
+      if (this.questionIndex > 0) {
+        this.questionIndex--;
+      }
+      if (this.questionIndex < 1) {
+        return;
+      }
     },
 
     // Return "true" count in userResponses
