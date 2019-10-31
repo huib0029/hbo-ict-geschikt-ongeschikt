@@ -32,7 +32,6 @@ export default {
   mounted: function() {
     this.generatePlayerData();
     this.generateRank();
-    this.deleteConfetti();
   },
   data: () => ({
     media: true,
@@ -53,11 +52,6 @@ export default {
     playerData: []
   }),
   methods: {
-
-    deleteConfetti: function() {
-      $('*[class^="confetti"]').remove();
-    },
-
     generatePlayerData: function() {
       let data = JSON.parse(localStorage.leaderboard);
       delete data[0];
