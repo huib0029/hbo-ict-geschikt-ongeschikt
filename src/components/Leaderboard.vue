@@ -69,7 +69,7 @@ export default {
       let sortBy = [
         {
           prop: "score",
-          direction: -1
+          direction: 1
         },
         {
           prop: "seconds",
