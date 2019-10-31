@@ -1,137 +1,96 @@
-<template>
-  <v-container>
-    <v-layout
-      text-center
-      wrap
-    >
-      <v-flex xs12>
-
-      </v-flex>
-
-      <v-flex mb-4>
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a href="https://community.vuetifyjs.com" target="_blank">Discord Community</a>
-        </p>
-      </v-flex>
-
-      <v-flex
-        mb-5
-        xs12
-      >
-        <h2 class="headline font-weight-bold mb-3">What's next?</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Important Links</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-
-      <v-flex
-        xs12
-        mb-5
-      >
-        <h2 class="headline font-weight-bold mb-3">Ecosystem</h2>
-
-        <v-layout justify-center>
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-layout>
-      </v-flex>
-    </v-layout>
-  </v-container>
+<template id="main">
+  <div id="app">
+    <canvas ref="canvas" id="emo_canvas" width="400" height="400"></canvas>
+    <div>
+      <video ref="video" id="video" width="400" height="400" playsinline muted autoplay></video>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
-  data: () => ({
-    ecosystem: [
-      {
-        text: 'vuetify-loader',
-        href: 'https://github.com/vuetifyjs/vuetify-loader',
-      },
-      {
-        text: 'github',
-        href: 'https://github.com/vuetifyjs/vuetify',
-      },
-      {
-        text: 'awesome-vuetify',
-        href: 'https://github.com/vuetifyjs/awesome-vuetify',
-      },
-    ],
-    importantLinks: [
-      {
-        text: 'Documentation',
-        href: 'https://vuetifyjs.com',
-      },
-      {
-        text: 'Chat',
-        href: 'https://community.vuetifyjs.com',
-      },
-      {
-        text: 'Made with Vuetify',
-        href: 'https://madewithvuejs.com/vuetify',
-      },
-      {
-        text: 'Twitter',
-        href: 'https://twitter.com/vuetifyjs',
-      },
-      {
-        text: 'Articles',
-        href: 'https://medium.com/vuetify',
-      },
-    ],
-    whatsNext: [
-      {
-        text: 'Explore components',
-        href: 'https://vuetifyjs.com/components/api-explorer',
-      },
-      {
-        text: 'Select a layout',
-        href: 'https://vuetifyjs.com/layout/pre-defined',
-      },
-      {
-        text: 'Frequently Asked Questions',
-        href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-      },
-    ],
-  }),
-};
-</script>
+// import Vue from 'vue';
+// import Axios from 'axios';
+// import VueAxios from 'vue-axios'
+
+// Vue.use(VueAxios, Axios)
+
+// export default ({
+//   template: '#main',
+//   data() {
+//     return {
+//       video: {},
+//       canvas: {},
+//       captures: [],
+//       testTimer: '',
+//     };
+//   },
+//   mounted() {
+//   //Start the PC front camera and display real-time video on the video tag
+//     this.video = this.$refs.video
+//     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+//       navigator.mediaDevices.getUserMedia({audio: false, video: true})
+//       .then(stream => {
+//         this.video.srcObject = stream
+//         this.video.play()
+//       })
+//     }
+
+//     console.log(this.$refs.canvas)
+//     // console.log(this.$refs.canvas)
+
+//     this.canvas = this.$refs.canvas 
+//     this.testTimer = setInterval(() => {
+//       // console.log(this.$refs.canvas)
+//       let context = this.canvas.getContext("2d").drawImage(this.video, 0, 0, 400, 240)
+//       this.captures.push(this.canvas.toDataURL("image/png")) //Store the captured image in the "captures" array
+//       let subscriptionKey = "Please input the key that has been sent to you";
+//       let uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+//       let params = {
+//         "returnFaceId": "true",
+//         "returnFaceLandmarks": "false",
+//         "returnFaceAttributes":
+//           "emotion"
+//       };
+//       //Convert the format of the image added at the end of the array and assign it to the imgURL format
+//       const imgURL = this.makeblob(this.captures[this.captures.length - 1])
+//       //Send imgURL image to Face API
+//       Axios.post(
+//         uriBase + "?returnFaceId=true&returnFaceLandmarks=false&returnFaceAttributes=age,emotion",
+//         imgURL,
+//         {
+//           headers: {
+//             "Content-Type": "application/octet-stream",
+//             "Ocp-Apim-Subscription-Key": subscriptionKey,
+//           }
+//         },
+//       )
+//       .then(response => {
+//         console.log(response.data[0].faceAttributes.emotion)
+
+//       })
+//       .catch(error => {
+//         // console.log(error.response)
+//       });
+//     }, 5000);
+//   },
+//   methods: {     
+//     makeblob: function (dataURL) {
+//       let BASE64_MARKER = ';base64,';
+//       if (dataURL.indexOf(BASE64_MARKER) == -1) {
+//         let parts = dataURL.split(',');
+//         let contentType = parts[0].split(':')[1];
+//         let raw = decodeURIComponent(parts[1]);
+//         return new Blob([raw], {type: contentType});
+//       }
+//       let parts = dataURL.split(BASE64_MARKER);
+//       let contentType = parts[0].split(':')[1];
+//       let raw = window.atob(parts[1]);
+//       let rawLength = raw.length;
+//       let uInt8Array = new Uint8Array(rawLength);
+//       for (let i = 0; i < rawLength; ++i) {
+//         uInt8Array[i] = raw.charCodeAt(i);
+//       }
+//       return new Blob([uInt8Array], {type: contentType})
+//     }
+//   }
+// });
