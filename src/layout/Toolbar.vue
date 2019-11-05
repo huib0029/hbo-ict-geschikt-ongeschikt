@@ -12,14 +12,15 @@
         </span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
+    <v-btn class="ma-2" outlined color="alert" @click="goTo('/')">
+      <v-icon>mdi-home</v-icon>
+      <span>Doe de quiz!</span>
+    </v-btn>
     <v-btn class="ma-2" outlined color="blue" @click="goTo('/leaderboard')">
           <v-icon>mdi-account-badge-horizontal-outline</v-icon>
       <span>Leaderboard</span>
     </v-btn>
-    <v-btn class="ma-2" outlined color="alert" @click="goTo('/')">
-          <v-icon>mdi-home</v-icon>
-      <span>Startpagina</span>
-    </v-btn>
+
     <v-btn class="ma-2" outlined color="success" href="https://hz.nl/opleidingen/hbo-ict" target="_blank">
       <span>Schrijf je nu in!</span>
     </v-btn>

@@ -111,6 +111,10 @@
                   Nog een keer!
                   <i class="fa fa-refresh"></i>
                 </a>
+                  <a class="button" @click="goTo('/leaderboard')">
+                      Naar het leaderboard
+                      <v-icon>mdi-account-badge-horizontal-outline</v-icon>
+                  </a>
                 <!--/resultTitleBlock-->
               </div>
               <!--/quizCompetedResult-->
@@ -129,6 +133,7 @@
 import RANDOMGIFAPI from "../api/random_gif_api";
 import { quiz, userResponseSkelaton } from "../data/QuizListOne";
 import { confetti, deleteConfetti } from "../plugins/confetti";
+import { push } from "../plugins/history";
 
 export default {
   data: () => ({
@@ -246,6 +251,10 @@ export default {
         let id = response.data.data.id;
         this.gifSrc = "https://i.giphy.com/" + id + ".gif";
       });
+    },
+
+    goTo(route) {
+      push(route);
     },
 
     saveDataToLocalStorage(score) {
