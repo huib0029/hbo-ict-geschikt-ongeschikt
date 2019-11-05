@@ -147,6 +147,34 @@ $primary_color: #3d5afe;
           transform: scaleX(0.9);
         }
       }
+
+      .input-name {
+        &:focus{
+          outline-width: 0;
+        }
+      }
+
+      .option-custom {
+        border-radius: 290486px;
+        padding: 9px 18px;
+        margin: 45px;
+        margin-bottom: 75px;
+        transition: $trans_duration;
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.05);
+        color: rgba(0, 0, 0, 0.85);
+        border: transparent 1px solid;
+
+        &.is-selected {
+          border-color: rgba(black, 0.25);
+          background-color: white;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+
+      }
     }
 
     .questionFooter {

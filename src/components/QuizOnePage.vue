@@ -14,6 +14,63 @@
               mode="out-in"
             >
               <!--qusetionContainer-->
+                <div
+                        class="questionContainer"
+
+                >
+                    <header>
+                        <h1 class="title is-6">
+                            HBO-ICT quiz
+                        </h1>
+                        <!--progress-->
+                        <div class="progressContainer">
+                            <progress
+                                    class="progress is-info is-small"
+                                    :value="1"
+                                    max="100"
+                            >{{(questionIndex/quiz.questions.length)*100}}%</progress>
+                            <p>{{((questionIndex/quiz.questions.length)*100).toFixed(0)}}% compleet</p>
+                        </div>
+                        <!--/progress-->
+                    </header>
+                    <!-- questionTitle -->
+                    <h2 class="titleContainer title">Wat is je naam?</h2>
+
+                    <!-- quizOptions -->
+                    <div class="optionContainer">
+                        <div class="option-custom">
+                        <input class="input-name" style="width: 100%;" placeholder="Klaas Vaak">
+                        </div>
+<!--                        <div-->
+<!--                                class="option"-->
+<!--                                v-for="(response, index) in quiz.questions[questionIndex].responses"-->
+<!--                                @click="selectOption(index)"-->
+<!--                                :class="{ 'is-selected': userResponses[questionIndex] == index}"-->
+<!--                                :key="index"-->
+<!--                        >{{ index | charIndex }}. {{ response.text }}</div>-->
+                    </div>
+
+                    <!--quizFooter: navigation and progress-->
+                    <footer class="questionFooter">
+                        <!--pagination-->
+                        <nav class="pagination" role="navigation" aria-label="pagination">
+                            <!-- back button -->
+                            <a
+                                    :class="(questionIndex > 0)?'button':'button disabled'"
+                                    @click="prev();"
+                            >Terug</a>
+
+                            <!-- next button -->
+                            <a
+                                    class="button is-active"
+                                    :class="(userResponses[questionIndex]==null)?'':'is-active'"
+                                    @click="next();"
+                                    :disabled="questionIndex>=quiz.questions.length"
+                            >{{ 'Start de quiz!' }}</a>
+                        </nav>
+                        <!--/pagination-->
+                    </footer>
+                </div>
               <div
                 class="questionContainer"
                 v-if="questionIndex<quiz.questions.length"
