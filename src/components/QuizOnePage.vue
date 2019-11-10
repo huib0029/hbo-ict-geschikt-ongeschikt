@@ -5,7 +5,7 @@
         <!--container-->
         <section class="container">
           <!--questionBox-->
-          <div v-if="playerName" class="questionBox" id="app">
+          <div class="questionBox" id="app">
             <!-- transition -->
             <transition
               :duration="{ enter: 500, leave: 300 }"
@@ -14,6 +14,48 @@
               mode="out-in"
             >
               <!--qusetionContainer-->
+                <div
+                        class="questionContainer" id="namePrompt"
+                        v-if="playerName==''"
+                >
+                    <header>
+                        <h1 class="title is-6">
+                            HBO-ICT quiz
+                        </h1>
+                        <!--progress-->
+                        <div class="progressContainer">
+                            <progress
+                                    class="progress is-info is-small"
+                                    :value="1"
+                                    max="100"
+                            >{{(questionIndex/quiz.questions.length)*100}}%</progress>
+                            <p>{{((questionIndex/quiz.questions.length)*100).toFixed(0)}}% compleet</p>
+                        </div>
+                        <!--/progress-->
+                    </header>
+                    <!-- questionTitle -->
+                    <h2 class="titleContainer title">Wat is je naam?</h2>
+
+                    <!-- quizOptions -->
+                    <div class="optionContainer">
+                        <div class="option-custom">
+                        <input class="input-name" id="namePromptInput" style="width: 100%;" required placeholder="Klaas Vaak">
+                        </div>
+                    </div>
+
+                    <!--quizFooter: navigation and progress-->
+                    <footer class="questionFooter">
+                        <!--pagination-->
+                        <nav class="pagination" role="navigation" aria-label="pagination">
+                            <!-- next button -->
+                            <a
+                                    class="button is-active"
+                                    @click="setPlayerName()"
+                            >{{ 'Start de quiz!' }}</a>
+                        </nav>
+                        <!--/pagination-->
+                    </footer>
+                </div>
               <div
                 class="questionContainer"
                 v-if="questionIndex<quiz.questions.length"
@@ -93,11 +135,11 @@
 
                 <!--resultTitleBlock-->
                 <h2 class="title">
-                  <span v-if="score()>7">Je hebt het fantastisch gedaan!</span>
-                  <span v-if="score()>5.5">Je hebt het goed gedaan!</span>
+                  <span v-if="score()>7">Je hebt het fantastisch gedaan {{ playerName }}!</span>
+                  <span v-if="score()>5.5">Je hebt het goed gedaan {{ playerName }}!</span>
                   <span v-if="score()<5.5">
-                    Je hebt het matig gedaan!
-                    <br />Probeer de test opnieuw te maken, ik weet zeker dat je het kan!
+                    Je hebt het matig gedaan {{ playerName }}!
+                    <br />Probeer de test opnieuw te maken, ik weet zeker dat je het kunt!
                   </span>
                 </h2>
 
@@ -120,8 +162,6 @@
               <!--/quizCompetedResult-->
             </transition>
           </div>
-          <!--/questionBox-->
-          <div v-else>Herlaad het programma of druk op de startpagina en begin opnieuw!</div>
         </section>
         <!--/container-->
       </v-col>
@@ -161,17 +201,15 @@ export default {
   },
 
   methods: {
-    askForPlayerName: function() {
-      this.playerName = prompt("Voer een naam in: (alleen letters)");
-      if (this.playerName === "" || name === null) {
-        alert("Er is geen naam opgegeven, probeer opnieuw");
-        this.askForPlayerName();
-      }
-      if (!/^[a-zA-Z]+$/.test(this.playerName)) {
-        alert("*Alleen letters invoeren");
-        this.askForPlayerName();
+    setPlayerName: function() {
+      let name = $('#namePromptInput').val();
+      if(!/^[a-zA-Z]+$/.test(name)){
+        alert("Vul alleen letters in!");
+      } else {
+      this.playerName = name;
       }
     },
+
     restart: function() {
       this.questionIndex = 0;
       this.startTime = 0;
@@ -179,12 +217,13 @@ export default {
       this.seconds = 0;
       this.playerName = "";
       this.userResponses = Array(this.quiz.questions.length).fill(null);
-      this.askForPlayerName();
       deleteConfetti();
     },
+
     selectOption: function(index) {
       this.$set(this.userResponses, this.questionIndex, index);
     },
+
     next: function() {
       if (this.questionIndex === 0) {
         this.startTime = new Date().getTime();
@@ -226,8 +265,6 @@ export default {
       var grade = (score / this.totalQuestions) * 10;
 
       return grade.toFixed(1);
-
-      // return this.userResponses.filter(function(val) { return val }).length;
     },
 
     generateGif: function(score) {
