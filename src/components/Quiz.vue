@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row>
       <v-col cols="12">
-        <v-row class="grey lighten-5" style="height: 300px;">
+        <v-row class="lighten-5" style="height: 300px;">
           <v-card class="mx-auto" :elevation="elevation" :width="width">
             <v-img
               v-if="media"
@@ -23,7 +23,7 @@
     </v-row>
     <v-row>
       <v-col cols="12">
-        <v-row class="grey lighten-5" style="height: 300px;">
+        <v-row class="lighten-5" style="height: 300px;">
           <v-card class="mx-auto" :elevation="elevation" :width="width" disabled>
             <v-img
               v-if="media"
