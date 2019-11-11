@@ -14,7 +14,10 @@
               mode="out-in"
             >
               <!--qusetionContainer-->
-              <div class="questionContainer" id="namePrompt" v-if="playerName==''">
+                <div
+                        class="questionContainer" id="namePrompt"
+                        v-if="!playerName"
+                >
                 <header>
                   <h1 class="title is-6">HBO-ICT quiz</h1>
                   <!--progress-->
@@ -30,7 +33,6 @@
                 </header>
                 <!-- questionTitle -->
                 <h2 class="titleContainer title">Wat is je naam?</h2>
-
                 <!-- quizOptions -->
                 <div class="optionContainer">
                   <div class="option-custom">
@@ -67,7 +69,7 @@
               </div>
               <div
                 class="questionContainer"
-                v-if="questionIndex<quiz.questions.length"
+                v-if="playerName"
                 v-bind:key="questionIndex"
               >
                 <header>
