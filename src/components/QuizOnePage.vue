@@ -69,7 +69,7 @@
               </div>
               <div
                 class="questionContainer"
-                v-if="playerName"
+                v-if="playerName && !sessionFinished"
                 v-bind:key="questionIndex"
               >
                 <header>
@@ -129,7 +129,7 @@
 
               <!--quizCompletedResult-->
               <div
-                v-if="questionIndex >= quiz.questions.length"
+                v-if="sessionFinished"
                 v-bind:key="questionIndex"
                 class="quizCompleted has-text-centered"
               >
@@ -209,7 +209,8 @@ export default {
         return pattern.test(value) || "Vul alleen letters in of cijfers in!";
       }
     },
-    playerNameTextField: ""
+    playerNameTextField: "",
+    sessionFinished: false
   }),
 
   mounted() {
@@ -240,6 +241,7 @@ export default {
       this.playerNameTextField = "";
       this.userResponses = Array(this.quiz.questions.length).fill(null);
       deleteConfetti();
+      this.sessionFinished = false;
     },
 
     selectOption: function(index) {
@@ -259,6 +261,7 @@ export default {
         this.generateGif(this.score());
         this.saveDataToLocalStorage(this.score());
         confetti(this.score());
+        this.sessionFinished = true;
       }
     },
 
