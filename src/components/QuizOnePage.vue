@@ -18,44 +18,55 @@
                         class="questionContainer" id="namePrompt"
                         v-if="!playerName"
                 >
-                    <header>
-                        <h1 class="title is-6">
-                            HBO-ICT quiz
-                        </h1>
-                        <!--progress-->
-                        <div class="progressContainer">
-                            <progress
-                                    class="progress is-info is-small"
-                                    :value="1"
-                                    max="100"
-                            >{{(questionIndex/quiz.questions.length)*100}}%</progress>
-                            <p>{{((questionIndex/quiz.questions.length)*100).toFixed(0)}}% compleet</p>
-                        </div>
-                        <!--/progress-->
-                    </header>
-                    <!-- questionTitle -->
-                    <h2 class="titleContainer title">Wat is je naam?</h2>
-
-                    <!-- quizOptions -->
-                    <div class="optionContainer">
-                        <div class="option-custom">
-                        <input class="input-name" id="namePromptInput" style="width: 100%;" required placeholder="Klaas Vaak">
-                        </div>
-                    </div>
-
-                    <!--quizFooter: navigation and progress-->
-                    <footer class="questionFooter">
-                        <!--pagination-->
-                        <nav class="pagination" role="navigation" aria-label="pagination">
-                            <!-- next button -->
-                            <a
-                                    class="button is-active"
-                                    @click="setPlayerName()"
-                            >{{ 'Start de quiz!' }}</a>
-                        </nav>
-                        <!--/pagination-->
-                    </footer>
+                <header>
+                  <h1 class="title is-6">HBO-ICT quiz</h1>
+                  <!--progress-->
+                  <div class="progressContainer">
+                    <progress
+                      class="progress is-info is-small"
+                      :value="1"
+                      max="100"
+                    >{{(questionIndex/quiz.questions.length)*100}}%</progress>
+                    <p>{{((questionIndex/quiz.questions.length)*100).toFixed(0)}}% compleet</p>
+                  </div>
+                  <!--/progress-->
+                </header>
+                <!-- questionTitle -->
+                <h2 class="titleContainer title">Wat is je naam?</h2>
+                <!-- quizOptions -->
+                <div class="optionContainer">
+                  <div class="option-custom">
+                    <v-text-field
+                      outlined
+                      counter
+                      required
+                      placeholder="Klaas Vaak"
+                      v-model="playerNameTextField"
+                      :hint="playerNameHint"
+                      :persistent-hint="true"
+                      maxlength="20"
+                      :rules="[playerNameInputRules.required, 
+                      playerNameInputRules.counter, 
+                      playerNameInputRules.validation]"
+                    ></v-text-field>
+                  </div>
                 </div>
+
+                <!--quizFooter: navigation and progress-->
+                <footer class="questionFooter">
+                  <!--pagination-->
+                  <nav class="pagination" role="navigation" aria-label="pagination">
+                    <!-- next button -->
+                    <v-btn
+                      color="primary"
+                      :block="true"
+                      :disabled="!playerNameTextField || /\s/.test(playerNameTextField)"
+                      @click="setPlayerName(playerNameTextField)"
+                    >{{ 'Start de quiz!' }}</v-btn>
+                  </nav>
+                  <!--/pagination-->
+                </footer>
+              </div>
               <div
                 class="questionContainer"
                 v-if="playerName"
@@ -153,10 +164,10 @@
                   Nog een keer!
                   <i class="fa fa-refresh"></i>
                 </a>
-                  <a class="button" @click="goTo('/leaderboard')">
-                      Naar het leaderboard
-                      <v-icon>mdi-account-badge-horizontal-outline</v-icon>
-                  </a>
+                <a class="button" @click="goTo('/leaderboard')">
+                  Naar het leaderboard
+                  <v-icon>mdi-account-badge-horizontal-outline</v-icon>
+                </a>
                 <!--/resultTitleBlock-->
               </div>
               <!--/quizCompetedResult-->
@@ -187,7 +198,18 @@ export default {
     startTime: 0,
     endTime: 0,
     seconds: 0,
-    playerName: ""
+    playerName: "",
+    playerNameHint: "Alleen letters of cijfers, geen spaties",
+    playerNameInputRules: {
+      validationPattern: /^([a-zA-Z0-9])*$/,
+      required: value => !!value || "Verplicht.",
+      counter: value => (value || "").length <= 20 || "Maximaal 20 karakters",
+      validation: value => {
+        const pattern = /^([a-zA-Z0-9])*$/;
+        return pattern.test(value) || "Vul alleen letters in of cijfers in!";
+      }
+    },
+    playerNameTextField: ""
   }),
 
   mounted() {
@@ -201,12 +223,11 @@ export default {
   },
 
   methods: {
-    setPlayerName: function() {
-      let name = $('#namePromptInput').val();
-      if(!/^[a-zA-Z]+$/.test(name)){
-        alert("Vul alleen letters in!");
+    setPlayerName: function(name) {
+      if (!this.playerNameInputRules.validationPattern.test(name)) {
+        return;
       } else {
-      this.playerName = name;
+        this.playerName = name;
       }
     },
 
@@ -216,6 +237,7 @@ export default {
       this.endTime = 0;
       this.seconds = 0;
       this.playerName = "";
+      this.playerNameTextField = "";
       this.userResponses = Array(this.quiz.questions.length).fill(null);
       deleteConfetti();
     },
