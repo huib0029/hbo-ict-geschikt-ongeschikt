@@ -4,6 +4,13 @@ $primary_color: #3d5afe;
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,400i,700");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
 
+
+.v-application {
+  //background-color: black !important;
+  background: url("../assets/network-background-blur.jpg") no-repeat center center !important;
+  background-size: cover !important;
+}
+
 .button {
   transition: $trans_duration;
 }
@@ -19,7 +26,7 @@ $primary_color: #3d5afe;
 }
 
 .container {
-  margin: 0 0.5rem;
+  //margin: 0 0.5rem;
 }
 
 .questionBox {
