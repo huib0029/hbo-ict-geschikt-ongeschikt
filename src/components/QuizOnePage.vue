@@ -206,7 +206,7 @@ export default {
       counter: value => (value || "").length <= 20 || "Maximaal 20 karakters",
       validation: value => {
         const pattern = /^([a-zA-Z0-9])*$/;
-        return pattern.test(value) || "Vul alleen letters in of cijfers in!";
+        return pattern.test(value) || "Vul alleen letters en/of cijfers in!";
       }
     },
     playerNameTextField: "",
