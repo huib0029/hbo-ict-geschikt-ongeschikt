@@ -35,6 +35,7 @@
                 <div class="optionContainer">
                   <div class="option-custom">
                     <v-text-field
+                      outlined
                       counter
                       required
                       placeholder="Klaas Vaak"
@@ -54,7 +55,12 @@
                   <!--pagination-->
                   <nav class="pagination" role="navigation" aria-label="pagination">
                     <!-- next button -->
-                    <a class="button is-active" @click="setPlayerName(playerNameTextField)">{{ 'Start de quiz!' }}</a>
+                    <v-btn
+                      color="primary"
+                      :block="true"
+                      :disabled="!playerNameTextField || /\s/.test(playerNameTextField)"
+                      @click="setPlayerName(playerNameTextField)"
+                    >{{ 'Start de quiz!' }}</v-btn>
                   </nav>
                   <!--/pagination-->
                 </footer>
@@ -193,6 +199,7 @@ export default {
     playerName: "",
     playerNameHint: "Alleen letters of cijfers, geen spaties",
     playerNameInputRules: {
+      validationPattern: /^([a-zA-Z0-9])*$/,
       required: value => !!value || "Verplicht.",
       counter: value => (value || "").length <= 20 || "Maximaal 20 karakters",
       validation: value => {
@@ -215,7 +222,7 @@ export default {
 
   methods: {
     setPlayerName: function(name) {
-      if (!/^[a-zA-Z0-9]+$/.test(name)) {
+      if (!this.playerNameInputRules.validationPattern.test(name)) {
         return;
       } else {
         this.playerName = name;
@@ -228,6 +235,7 @@ export default {
       this.endTime = 0;
       this.seconds = 0;
       this.playerName = "";
+      this.playerNameTextField = "";
       this.userResponses = Array(this.quiz.questions.length).fill(null);
       deleteConfetti();
     },
