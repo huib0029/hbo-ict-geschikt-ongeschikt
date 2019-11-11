@@ -16,7 +16,7 @@
               <!--qusetionContainer-->
                 <div
                         class="questionContainer" id="namePrompt"
-                        v-if="playerName==''"
+                        v-if="!playerName"
                 >
                     <header>
                         <h1 class="title is-6">
@@ -58,7 +58,7 @@
                 </div>
               <div
                 class="questionContainer"
-                v-if="questionIndex<quiz.questions.length"
+                v-if="playerName"
                 v-bind:key="questionIndex"
               >
                 <header>
