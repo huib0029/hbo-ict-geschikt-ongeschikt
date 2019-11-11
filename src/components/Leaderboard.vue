@@ -21,7 +21,7 @@
       dense
     >
       <template v-slot:item.rank="{ item }">
-        <v-chip :color="getColor(item.rank)" dark>{{ item.rank }}</v-chip>
+        <v-chip :color="getColor(item.rank)" dark>{{item.rank}}</v-chip>
       </template>
     </v-data-table>
   </v-card>
@@ -47,6 +47,11 @@ export default {
       { text: "Cijfer", value: "score", sortable: false },
       { text: "Aantal vragen goed", value: "correctAnswers", sortable: false },
       { text: "Aantal vragen fout", value: "wrongAnswers", sortable: false },
+      {
+        text: "Aantal vragen onbeantwoord",
+        value: "emptyAnswers",
+        sortable: false
+      },
       { text: "Tijd (seconden)", value: "seconds", sortable: false }
     ],
     playerData: []
@@ -63,7 +68,7 @@ export default {
       let sortBy = [
         {
           prop: "score",
-          direction: 1
+          direction: -1
         },
         {
           prop: "seconds",

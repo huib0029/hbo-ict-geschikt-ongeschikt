@@ -14,10 +14,7 @@
               mode="out-in"
             >
               <!--qusetionContainer-->
-                <div
-                        class="questionContainer" id="namePrompt"
-                        v-if="!playerName"
-                >
+              <div class="questionContainer" id="namePrompt" v-if="!playerName">
                 <header>
                   <h1 class="title is-6">HBO-ICT quiz</h1>
                   <!--progress-->
@@ -41,8 +38,9 @@
                       counter
                       required
                       placeholder="Klaas Vaak"
+                      label="Naam:"
                       v-model="playerNameTextField"
-                      :hint="playerNameHint"
+                      hint="Alleen letters of cijfers, geen spaties"
                       :persistent-hint="true"
                       maxlength="20"
                       :rules="[playerNameInputRules.required, 
@@ -60,9 +58,9 @@
                     <v-btn
                       color="primary"
                       :block="true"
-                      :disabled="!playerNameTextField || /\s/.test(playerNameTextField)"
+                      :disabled="!playerNameTextField || !(playerNameInputRules.validationPattern).test(playerNameTextField)"
                       @click="setPlayerName(playerNameTextField)"
-                    >{{ 'Start de quiz!' }}</v-btn>
+                    >Start de quiz!</v-btn>
                   </nav>
                   <!--/pagination-->
                 </footer>
@@ -199,7 +197,6 @@ export default {
     endTime: 0,
     seconds: 0,
     playerName: "",
-    playerNameHint: "Alleen letters of cijfers, geen spaties",
     playerNameInputRules: {
       validationPattern: /^([a-zA-Z0-9])*$/,
       required: value => !!value || "Verplicht.",
@@ -229,6 +226,7 @@ export default {
         return;
       } else {
         this.playerName = name;
+        this.startTime = new Date().getTime();
       }
     },
 
@@ -249,9 +247,6 @@ export default {
     },
 
     next: function() {
-      if (this.questionIndex === 0) {
-        this.startTime = new Date().getTime();
-      }
       if (this.questionIndex < this.quiz.questions.length) {
         this.questionIndex++;
       }
@@ -323,6 +318,7 @@ export default {
       let a = [];
       let correctAnswers = 0;
       let wrongAnswers = 0;
+      let emptyAnswers = 0;
       // Parse the serialized data back into an aray of objects
       a = JSON.parse(localStorage.getItem("leaderboard"));
       // Push the new data (whether it be an object or anything else) onto the array
@@ -346,11 +342,18 @@ export default {
         }
       }
 
+      for (let i = 0; i < this.userResponses.length; i++) {
+        if (this.quiz.questions[i].responses[this.userResponses[i]] == null) {
+          emptyAnswers = emptyAnswers + 1;
+        }
+      }
+
       let userdata = {
         playerName: this.playerName,
         score: score,
         correctAnswers: correctAnswers,
         wrongAnswers: wrongAnswers,
+        emptyAnswers: emptyAnswers,
         seconds: this.seconds
       };
 
