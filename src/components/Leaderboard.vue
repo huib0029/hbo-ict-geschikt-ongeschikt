@@ -68,7 +68,7 @@ export default {
       let sortBy = [
         {
           prop: "score",
-          direction: -1
+          direction: 1
         },
         {
           prop: "seconds",
@@ -97,13 +97,13 @@ export default {
     },
     getColor(rank) {
       if (rank === 1) {
-        return "green";
+        return "#FFD700";
       }
       if (rank === 2) {
-        return "orange";
+        return "#C0C0C0";
       }
       if (rank === 3) {
-        return "red";
+        return "#a5682a";
       }
       if (rank > 3) {
         return;
