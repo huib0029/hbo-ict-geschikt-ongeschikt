@@ -44,7 +44,7 @@ export default {
         value: "rank"
       },
       { text: "Speler", value: "playerName", sortable: false },
-      { text: "Cijfer", value: "score", sortable: false },
+      { text: "Cijfer", value: "score", sortable: true },
       { text: "Aantal vragen goed", value: "correctAnswers", sortable: false },
       { text: "Aantal vragen fout", value: "wrongAnswers", sortable: false },
       {
@@ -52,7 +52,7 @@ export default {
         value: "emptyAnswers",
         sortable: false
       },
-      { text: "Tijd (seconden)", value: "seconds", sortable: false }
+      { text: "Tijd (seconden)", value: "seconds", sortable: true }
     ],
     playerData: []
   }),
@@ -68,7 +68,7 @@ export default {
       let sortBy = [
         {
           prop: "score",
-          direction: 1
+          direction: -1
         },
         {
           prop: "seconds",
@@ -103,7 +103,7 @@ export default {
         return "#C0C0C0";
       }
       if (rank === 3) {
-        return "#a5682a";
+        return "#cd7f32";
       }
       if (rank > 3) {
         return;
