@@ -144,8 +144,8 @@
 
                 <!--resultTitleBlock-->
                 <h2 class="title">
-                  <span v-if="score()>7">Je hebt het fantastisch gedaan {{ playerName }}!</span>
-                  <span v-if="score()>5.5">Je hebt het goed gedaan {{ playerName }}!</span>
+                  <span v-if="score()>7">Je hebt het fantastisch gedaan {{ playerName }}!<br /></span>
+                  <span v-if="score()>5.5">Je hebt het goed gedaan {{ playerName }}!<br /></span>
                   <span v-if="score()<5.5">
                     Je hebt het matig gedaan {{ playerName }}!
                     <br />Probeer de test opnieuw te maken, ik weet zeker dat je het kunt!
