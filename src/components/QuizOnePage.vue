@@ -23,8 +23,17 @@
                       class="progress is-info is-small"
                       :value="1"
                       max="100"
-                    >{{(questionIndex/quiz.questions.length)*100}}%</progress>
-                    <p>{{((questionIndex/quiz.questions.length)*100).toFixed(0)}}% compleet</p>
+                      >{{
+                        (questionIndex / quiz.questions.length) * 100
+                      }}%</progress
+                    >
+                    <p>
+                      {{
+                        ((questionIndex / quiz.questions.length) * 100).toFixed(
+                          0
+                        )
+                      }}% compleet
+                    </p>
                   </div>
                   <!--/progress-->
                 </header>
@@ -43,9 +52,11 @@
                       hint="Alleen letters of cijfers, geen spaties"
                       :persistent-hint="true"
                       maxlength="20"
-                      :rules="[playerNameInputRules.required, 
-                      playerNameInputRules.counter, 
-                      playerNameInputRules.validation]"
+                      :rules="[
+                        playerNameInputRules.required,
+                        playerNameInputRules.counter,
+                        playerNameInputRules.validation
+                      ]"
                     ></v-text-field>
                   </div>
                 </div>
@@ -53,14 +64,24 @@
                 <!--quizFooter: navigation and progress-->
                 <footer class="questionFooter">
                   <!--pagination-->
-                  <nav class="pagination" role="navigation" aria-label="pagination">
+                  <nav
+                    class="pagination"
+                    role="navigation"
+                    aria-label="pagination"
+                  >
                     <!-- next button -->
                     <v-btn
                       color="primary"
                       :block="true"
-                      :disabled="!playerNameTextField || !(playerNameInputRules.validationPattern).test(playerNameTextField)"
+                      :disabled="
+                        !playerNameTextField ||
+                          !playerNameInputRules.validationPattern.test(
+                            playerNameTextField
+                          )
+                      "
                       @click="setPlayerName(playerNameTextField)"
-                    >Start de quiz!</v-btn>
+                      >Start de quiz!</v-btn
+                    >
                   </nav>
                   <!--/pagination-->
                 </footer>
@@ -80,44 +101,72 @@
                   <div class="progressContainer">
                     <progress
                       class="progress is-info is-small"
-                      :value="(questionIndex/quiz.questions.length)*100"
+                      :value="(questionIndex / quiz.questions.length) * 100"
                       max="100"
-                    >{{(questionIndex/quiz.questions.length)*100}}%</progress>
-                    <p>{{((questionIndex/quiz.questions.length)*100).toFixed(0)}}% compleet</p>
+                      >{{
+                        (questionIndex / quiz.questions.length) * 100
+                      }}%</progress
+                    >
+                    <p>
+                      {{
+                        ((questionIndex / quiz.questions.length) * 100).toFixed(
+                          0
+                        )
+                      }}% compleet
+                    </p>
                   </div>
                   <!--/progress-->
                 </header>
                 <!-- questionTitle -->
-                <h2 class="titleContainer title">{{ quiz.questions[questionIndex].text }}</h2>
+                <h2 class="titleContainer title">
+                  {{ quiz.questions[questionIndex].text }}
+                </h2>
 
                 <!-- quizOptions -->
                 <div class="optionContainer">
                   <div
                     class="option"
-                    v-for="(response, index) in quiz.questions[questionIndex].responses"
+                    v-for="(response, index) in quiz.questions[questionIndex]
+                      .responses"
                     @click="selectOption(index)"
-                    :class="{ 'is-selected': userResponses[questionIndex] == index}"
+                    :class="{
+                      'is-selected': userResponses[questionIndex] == index
+                    }"
                     :key="index"
-                  >{{ index | charIndex }}. {{ response.text }}</div>
+                  >
+                    {{ index | charIndex }}. {{ response.text }}
+                  </div>
                 </div>
 
                 <!--quizFooter: navigation and progress-->
                 <footer class="questionFooter">
                   <!--pagination-->
-                  <nav class="pagination" role="navigation" aria-label="pagination">
+                  <nav
+                    class="pagination"
+                    role="navigation"
+                    aria-label="pagination"
+                  >
                     <!-- back button -->
                     <a
-                      :class="(questionIndex > 0)?'button':'button disabled'"
-                      @click="prev();"
-                    >Terug</a>
+                      :class="questionIndex > 0 ? 'button' : 'button disabled'"
+                      @click="prev()"
+                      >Terug</a
+                    >
 
                     <!-- next button -->
                     <a
                       class="button"
-                      :class="(userResponses[questionIndex]==null)?'':'is-active'"
-                      @click="next();"
-                      :disabled="questionIndex>=quiz.questions.length"
-                    >{{ (userResponses[questionIndex]==null)?'Echt geen idee!':'Volgende' }}</a>
+                      :class="
+                        userResponses[questionIndex] == null ? '' : 'is-active'
+                      "
+                      @click="next()"
+                      :disabled="questionIndex >= quiz.questions.length"
+                      >{{
+                        userResponses[questionIndex] == null
+                          ? "Echt geen idee!"
+                          : "Volgende"
+                      }}</a
+                    >
                   </nav>
                   <!--/pagination-->
                 </footer>
@@ -138,17 +187,25 @@
                 <span class="icon">
                   <i
                     class="fa"
-                    :class="score()>5.5?'fa-check-circle-o is-active':'fa-times-circle'"
+                    :class="
+                      score() > 5.4
+                        ? 'fa-check-circle-o is-active'
+                        : 'fa-times-circle'
+                    "
                   ></i>
                 </span>
 
                 <!--resultTitleBlock-->
                 <h2 class="title">
-                  <span v-if="score()>7">Je hebt het fantastisch gedaan {{ playerName }}!<br /></span>
-                  <span v-if="score()>5.5">Je hebt het goed gedaan {{ playerName }}!<br /></span>
-                  <span v-if="score()<5.5">
-                    Je hebt het matig gedaan {{ playerName }}!
-                    <br />Probeer de test opnieuw te maken, ik weet zeker dat je het kunt!
+                  <span v-if="score() > 9"
+                    >Je hebt het fantastisch gedaan {{ playerName }}!</span
+                  >
+                  <span v-if="score() > 7"
+                    >Je hebt het goed gedaan {{ playerName }}!</span
+                  >
+                  <span v-if="score() > 5.4">
+                    Je hebt het voldoende gedaan {{ playerName }}! <br />Als je
+                    de test nog een keer maakt haal je een nog hoger cijfer!
                   </span>
                 </h2>
 
@@ -157,15 +214,20 @@
                   <br />
                   in {{ seconds }} seconden
                 </p>
-                <br />
-                <a class="button" @click="restart()">
+                <v-btn class="ma-2" :rounded="true" outlined @click="restart()">
                   Nog een keer!
-                  <i class="fa fa-refresh"></i>
-                </a>
-                <a class="button" @click="goTo('/leaderboard')">
-                  Naar het leaderboard
-                  <v-icon>mdi-account-badge-horizontal-outline</v-icon>
-                </a>
+                  <v-icon>mdi-refresh</v-icon>
+                </v-btn>
+                <v-btn
+                  class="ma-2"
+                  :rounded="true"
+                  outlined
+                  color="success"
+                  href="https://hz.nl/opleidingen/hbo-ict"
+                >
+                  Schrijf je nu in!
+                  <v-icon>mdi-pencil-circle-outline</v-icon>
+                </v-btn>
                 <!--/resultTitleBlock-->
               </div>
               <!--/quizCompetedResult-->
@@ -284,18 +346,22 @@ export default {
 
       var grade = (score / this.totalQuestions) * 10;
 
+      if (grade < 5.5) {
+        grade = 5.5;
+      }
+
       return grade.toFixed(1);
     },
 
     generateGif: function(score) {
       let tag;
-      if (score < 5.5) {
-        tag = "false";
-      }
-      if (score > 5.5) {
-        tag = "good";
+      if (score > 5.4) {
+        tag = "okay";
       }
       if (score > 7) {
+        tag = "good";
+      }
+      if (score > 9) {
         tag = "fantastic";
       }
       RANDOMGIFAPI.get("", {

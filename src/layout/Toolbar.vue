@@ -6,9 +6,9 @@
     <v-spacer></v-spacer>
     <v-toolbar-title>
     <span text-no-wrap class="font-weight-light">
-      De grote HBO-ICT geschikt
+      De HBO-ICT geschikt
         <v-icon>mdi-checkbox-marked-outline</v-icon> of ongeschikt
-        <v-icon>mdi-checkbox-blank-outline</v-icon> tool
+        <v-icon>mdi-checkbox-blank-outline</v-icon> test
         </span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
