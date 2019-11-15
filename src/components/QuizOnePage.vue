@@ -138,17 +138,17 @@
                 <span class="icon">
                   <i
                     class="fa"
-                    :class="score()>5.5?'fa-check-circle-o is-active':'fa-times-circle'"
+                    :class="score()>5.4?'fa-check-circle-o is-active':'fa-times-circle'"
                   ></i>
                 </span>
 
                 <!--resultTitleBlock-->
                 <h2 class="title">
-                  <span v-if="score()>7">Je hebt het fantastisch gedaan {{ playerName }}!</span>
-                  <span v-if="score()>5.5">Je hebt het goed gedaan {{ playerName }}!</span>
-                  <span v-if="score()<5.5">
-                    Je hebt het matig gedaan {{ playerName }}!
-                    <br />Probeer de test opnieuw te maken, ik weet zeker dat je het kunt!
+                  <span v-if="score()>9">Je hebt het fantastisch gedaan {{ playerName }}!</span>
+                  <span v-if="score()>7">Je hebt het goed gedaan {{ playerName }}!</span>
+                  <span v-if="score()>5.4">
+                    Je hebt het voldoende gedaan {{ playerName }}!
+                    <br />Als je de test nog een keer maakt haal je een nog hoger cijfer!
                   </span>
                 </h2>
 
@@ -284,18 +284,22 @@ export default {
 
       var grade = (score / this.totalQuestions) * 10;
 
+      if (grade < 5.5) {
+        grade = 5.5
+      }
+
       return grade.toFixed(1);
     },
 
     generateGif: function(score) {
       let tag;
-      if (score < 5.5) {
-        tag = "false";
-      }
-      if (score > 5.5) {
-        tag = "good";
+      if (score > 5.4) {
+        tag = "okay";
       }
       if (score > 7) {
+        tag = "good";
+      }
+      if (score > 9) {
         tag = "fantastic";
       }
       RANDOMGIFAPI.get("", {
