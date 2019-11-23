@@ -14,23 +14,20 @@ export const quiz = {
       ]
     },
     {
-      text: "Waar staat CMS voor?",
+      text: "Waar staat ICT voor?",
       responses: [
-        { text: "Content Markup System" },
-        { text: "Content onderhoud Systeem" },
-        { text: "Content My Self" },
-        { text: "Content Management System", correct: true },
+        { text: "Information communnication translation" },
+        { text: "Informatie communicatie technologie", correct: true},
+        { text: "Information communnication trouble" },
         { text: "Geen van bovenstaande" }
       ]
     },
     {
-      text: "De uitkomst van een datascience project is vaak afhankelijk van:",
+      text: "Is Mac OS X open source?",
       responses: [
-        { text: "De scope van het project" },
-        { text: "De kwaliteit van de data", correct: true },
-        { text: "De gebruikte programmeertaal" },
-        { text: "De datascientist" },
-        { text: "Geen van bovenstaande" }
+        { text: "Ja" },
+        { text: "Nee", correct: true },
+        { text: "Dat hangt van de versie af" },
       ]
     },
     {
@@ -50,22 +47,21 @@ export const quiz = {
       ]
     },
     {
-      text: "Welk lectoraat is verbonden aan de opleiding HBO-ICT?",
+      text: "Welk lectoraat van de opleiding HBO-ICT houdt zich bezig met het analyseren van data?",
       responses: [
         { text: "Ontwikkelingshulp" },
         { text: "Data Science", correct: true },
-        { text: "Business Intelligence & Analytics" },
-        { text: "Centure of bugs" },
+        { text: "Healthy Region" },
+        { text: "Marine Biobased Specialties" },
         { text: "Kenniscentrum kusttoerisme" }
       ]
     },
     {
-      text: "Welke van de volgende query's is goed?",
+      text: "Kan je Windows programma's zonder omwegen draaien op Ubuntu?",
       responses: [
-        { text: "SELECT name from users", correct: true },
-        { text: "GET koffie FROM koffieapparaat" },
-        { text: "UPDATE studenten INSERT studiepunten=60 WHERE id=-1" },
-        { text: "Wordpress" },
+        { text: "Nee", correct: true },
+        { text: "Ja" },
+        { text: "Alleen als het webapps zijn" },
         { text: "Geen van bovenstaande" }
       ]
     },
@@ -81,43 +77,43 @@ export const quiz = {
       ]
     },
     {
-      text: "Welke is geen webserver?",
+      text: "Waar staat WWW voor?",
       responses: [
-        { text: "Apache" },
-        { text: "NGINX" },
-        { text: "IIS" },
-        { text: "Kodi", correct: true },
+        { text: "Werkschuw Whizzkid Werkwijze" },
+        { text: "Werpschijf werpen wedstrijd" },
+        { text: "World Wide Web", correct: true },
+        { text: "Wijntypes Wegwijzer Wijnclubs" },
+        { text: "What? Where? When?" },
+        { text: "Windows Wonder Wall" },
         { text: "Geen van allen" }
       ]
     },
     {
-      text: "Waar staat de comptentie BAN voor?",
+      text: "Wie is de huidige CEO van Microsoft?",
       responses: [
-        { text: "Iemand bannen of wordt geband" },
-        { text: "Bedrijfsprocessen analyseren" },
-        { text: "Bedrijsprocessen achtereenvolgens noteren", correct: true },
+        { text: "Satya Nadella" },
+        { text: "Bill Gates" },
+        { text: "Sundar Pichai", correct: true },
+        { text: "Mark Zuckerberg", correct: true },
         { text: "Geen van allen" }
       ]
     },
     {
-      text: "Welk proces komt niet voor in een pakketselectie van software?",
+      text: "Welke van onderstaande antwoorden is geen streamingplatform",
       responses: [
-        { text: "Opstellen van Long List" },
-        { text: "Opstellen van Knock-Out criteria" },
-        { text: "Opstellen van requirements" },
-        {
-          text: "ASMR toepassen (Autonomous Sensory Meridian Respons)",
-          correct: true
-        }
+        { text: "Facebook", correct: true },
+        { text: "Youtube" },
+        { text: "Netflix" },
+        { text: "Spotify" }
       ]
     },
     {
-      text: "Wat doet een Data Scientist?",
+      text: "Waar is ITIL?",
       responses: [
-        { text: "Data Science", correct: true },
-        { text: "Analytische filosofie" },
-        { text: "Software analyseren en ontwerpen" },
-        { text: "Proactief data verzamelen" }
+        { text: "Information Technology Infrastructure Library", correct: true },
+        { text: "Apollo 13" },
+        { text: "Een manier om te documenteren" },
+        { text: "TopDesk" }
       ]
     }
   ]
