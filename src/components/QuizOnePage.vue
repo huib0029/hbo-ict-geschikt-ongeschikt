@@ -46,7 +46,7 @@
                       outlined
                       counter
                       required
-                      placeholder="Klaas Vaak"
+                      placeholder="Klaas"
                       label="Naam:"
                       v-model="playerNameTextField"
                       hint="Alleen letters of cijfers, geen spaties"
@@ -57,6 +57,7 @@
                         playerNameInputRules.counter,
                         playerNameInputRules.validation
                       ]"
+                     @keyup.enter="setPlayerName(playerNameTextField)"
                     ></v-text-field>
                   </div>
                 </div>
@@ -200,10 +201,10 @@
                   <span v-if="score() > 9"
                     >Je hebt het fantastisch gedaan {{ playerName }}!</span
                   >
-                  <span v-if="score() > 7"
+                  <span v-if="score() > 7 && score() < 9"
                     >Je hebt het goed gedaan {{ playerName }}!</span
                   >
-                  <span v-if="score() > 5.4">
+                  <span v-if="score() > 5.4 && score() < 7">
                     Je hebt het voldoende gedaan {{ playerName }}! <br />Als je
                     de test nog een keer maakt haal je een nog hoger cijfer!
                   </span>
