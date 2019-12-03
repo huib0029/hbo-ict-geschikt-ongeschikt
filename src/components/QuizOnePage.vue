@@ -57,6 +57,7 @@
                         playerNameInputRules.counter,
                         playerNameInputRules.validation
                       ]"
+                     @keyup.enter="setPlayerName(playerNameTextField)"
                     ></v-text-field>
                   </div>
                 </div>
