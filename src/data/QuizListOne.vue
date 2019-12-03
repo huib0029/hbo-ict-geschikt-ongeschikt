@@ -91,10 +91,10 @@ export const quiz = {
     {
       text: "Wie is de huidige CEO van Microsoft?",
       responses: [
-        { text: "Satya Nadella" },
+        { text: "Satya Nadella", correct: true  },
         { text: "Bill Gates" },
-        { text: "Sundar Pichai", correct: true },
-        { text: "Mark Zuckerberg", correct: true },
+        { text: "Sundar Pichai"},
+        { text: "Mark Zuckerberg" },
         { text: "Geen van allen" }
       ]
     },
@@ -108,7 +108,7 @@ export const quiz = {
       ]
     },
     {
-      text: "Waar is ITIL?",
+      text: "Wat is ITIL?",
       responses: [
         { text: "Information Technology Infrastructure Library", correct: true },
         { text: "Apollo 13" },
