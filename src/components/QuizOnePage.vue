@@ -58,6 +58,7 @@
                         playerNameInputRules.validation
                       ]"
                      @keyup.enter="setPlayerName(playerNameTextField)"
+                     ref="playernamefield"
                     ></v-text-field>
                   </div>
                 </div>
@@ -303,6 +304,7 @@ export default {
       this.userResponses = Array(this.quiz.questions.length).fill(null);
       deleteConfetti();
       this.sessionFinished = false;
+      this.$refs.playernamefield.focus();
     },
 
     selectOption: function(index) {
